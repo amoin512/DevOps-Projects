@@ -87,7 +87,8 @@ while choice != '4':
         arman_list.add_task()
     elif choice == '3':
         arman_list.remove_task()
-    else:
+    elif choice == '4':
+        print('Goodbye!')
         break
-
-print('Have a good day!')
+    else:
+        print("Invalid choice. Please try again!")
