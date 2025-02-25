@@ -34,3 +34,32 @@ python ToDoList_Code.py
 - [3] complete task: Remove a task by entering its ID. This will mark as completed and delete it from the list.
 - [4] exit: Exit the application.
 
+4. The tasks are stored in a file named 'todo_list.txt' in the same directory as the script.
+
+## Example:
+
+```
+    == TODO LIST ==  
+    [1] show task    
+    [2] add task     
+    [3] complete task
+    [4] exit
+
+Your choice: 2
+What is your task? Finish Homework
+What is the deadline? Monday
+
+    == TODO LIST ==  
+    [1] show task    
+    [2] add task     
+    [3] complete task
+    [4] exit
+
+Your choice: 1
+bfff8c79-f19a-4fa4-9e6a-6cd25573eac9 | Finish Homework | Monday
+```
+
+## Error Handling:
+
+- If any error occurs while reading or writing to the file, the program will display an error message.
+- Invalid menu choices with prompt user to try again.
