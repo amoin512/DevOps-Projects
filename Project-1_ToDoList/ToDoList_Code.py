@@ -76,17 +76,17 @@ class todo_list():
             print('An error occurred:', e)
         
         
-arman_list = todo_list()
+user1_list = todo_list()
 choice = 0
 
 while choice != '4':
     main_menu()
     if choice == '1':
-        arman_list.show_task()
+        user1_list.show_task()
     elif choice == '2':
-        arman_list.add_task()
+        user1_list.add_task()
     elif choice == '3':
-        arman_list.remove_task()
+        user1_list.remove_task()
     elif choice == '4':
         print('Goodbye!')
         break

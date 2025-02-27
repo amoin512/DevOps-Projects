@@ -14,8 +14,10 @@ The project also includes a Dockerfile to build and run the application in a con
 
 ## Requirements
 
-- **Docker:** Make sure Docker is installed on your system.
 - **Python 3.x** (if running without Docker i.e. to test the code)
+- **Docker:** Make sure Docker is installed on your system.
+- **DockerHub account**
+- **Google Cloud Platform (GCP) account**
 
 ## How to Use:
 
@@ -35,10 +37,10 @@ docker build -t todo_list_image:v1
 
 This will:
 - Use the `Dockerfile` to create a Docker image called `todo_list_image:v1`.
-- Set up the working directory as `/app` and copy the contents of the current directory into the container.
+- Sets the base image to `python:3.9-slim` and the working directory as `/app` and copies the contents of the current directory into the container.
 - Run the Python script `ToDoList_Code.py` to start the application.
 
-3. Tag the Docker Image
+3. Tag the Docker Image to prepare for the Push
 
 After building the Docker image, you can tag the image for Docker Hub:
 
@@ -76,6 +78,8 @@ docker run -it --rm moina512/python-todo-list-repo:latest
 
 - The `-it` flag allows interactive mode so you can interact with the application.
 - The `--rm` flag ensures the container is removed once you exit.
+
+This step is to ensure that the application runs successfully as a container. 
 
 7. Interact with the To-To List Application
 
@@ -132,3 +136,128 @@ bfff8c79-f19a-4fa4-9e6a-6cd25573eac9 | Finish Homework | Monday
 
 - If any error occurs while reading or writing to the file, the program will display an error message.
 - Invalid menu choices with prompt user to try again.
+
+# Deploying the Application on GKE
+
+## Steps to Deploy on GKE
+
+1. Authenticate GCP CLI
+
+Start by authenticating your GCP account: 
+
+```
+gcloud auth login
+```
+
+2. Set the GCP Project
+
+Set the project you want to work with:
+
+```
+gcloud config set project PROJECT_ID
+```
+
+3. Create a GKE Cluster
+
+You can create a GKE cluster using the following command:
+
+```
+gcloud container clusters create CLUSTER_NAME \
+  --zone ZONE \
+  --num-nodes 1
+```
+
+4. Configure kubectl to USE GKE Cluster
+
+Configure `kubectl` to interact with the GKE cluster:
+
+```
+gcloud container clusters get-credentials CLUSTER_NAME --zone ZONE --project PROJECT_ID
+```
+
+5. Create Kubernetes Deployment and Service
+
+Define two Kubernetes resources: a **Deployment** to manage the application pods, and a **Service** to expose the app externally. Save these resources in YAML files (`deployment.yaml` and `service.yaml`).
+
+- `deployment.yaml`
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app
+  labels:
+    app: todo-list
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-list
+  template:
+    metadata:
+      labels:
+        app: todo-list
+    spec:
+      containers:
+      - name: todo-c
+        image: moina512/python-todo-list-repo:latest
+        command: ["python", "ToDoList_Code.py"]
+        stdin: true
+        tty: true
+        ports:
+        - containerPort: 80
+```
+
+The **Deployment** will pull the Docker image from DockerHub and run it in the Kubernetes cluster.
+
+- `service.yaml`
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: todo-list
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+```
+
+The **Service** will expose the app via a LoadBalancer, allowing external access to the application on port 80.
+
+6. Deploy to GKE
+
+Apply the Kubernetes configuration to deploy the app:
+
+```
+kubectl create -f deployment.yaml
+kubectl create -f service.yaml
+```
+
+7. Verify Deployment
+
+Check if the pod(s) is running successfully:
+
+```
+kubectl get pods
+```
+
+You should see a pod running with the name `todo-app-<random-string>`.
+
+7. Get the External IP
+
+To access the application from a web browser , find the external IP of the LoadBalancer service:
+
+```
+kubectl get svc todo-app-service
+```
+
+Look for the `EXTERNAL-IP` filed. Once the IP address is available, you should be able to access the To-Do List application in your browser by navigating to:
+
+```
+http://<EXTERNAL-IP>
+```
