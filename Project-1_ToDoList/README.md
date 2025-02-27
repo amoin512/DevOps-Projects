@@ -202,8 +202,8 @@ spec:
       - name: todo-c
         image: moina512/python-todo-list-repo:latest
         command: ["python", "ToDoList_Code.py"]
-        stdin: true
-        tty: true
+        stdin: true #enable interactive input
+        tty: true #allocate TTY for interactive sessions
         ports:
         - containerPort: 80
 ```
