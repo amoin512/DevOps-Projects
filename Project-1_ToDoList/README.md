@@ -224,7 +224,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80 #exposed port for external access
-      targetPort: 80 #Port inside the container
+      targetPort: 80 #port inside the container
 ```
 
 The **Service** will expose the app via a LoadBalancer, allowing external access to the application on port 80.
