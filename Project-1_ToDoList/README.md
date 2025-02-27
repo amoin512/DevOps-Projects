@@ -2,7 +2,7 @@
 
 This is a simple command-line To-Do List application written in python. The app allows users to manage tasks, including adding new tasks, viewing existing ones, and removing completed tasks. It creates a text file 'todo_list.txt' to store tasks persistently. Each task has a unique identifier (UUID), a task description and a deadline.
 
-The project also includes a Dockerfile to build and run the application in a containerized environment, making it easier to deploy and run across different systems.
+The project demonstrates the process of containerizing a Python application with Docker, pushing the image to DockerHub, and deploying it on a Google Kubernetes Engine (GKE) cluster.
 
 ## Features
 
