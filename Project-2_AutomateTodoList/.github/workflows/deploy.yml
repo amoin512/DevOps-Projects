@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code for runner
-        uses: action/checkout@v4
+        uses: actions/checkout@v4
       - name: Build Image
         run: docker build -t todo-list-image:v2
   push:
