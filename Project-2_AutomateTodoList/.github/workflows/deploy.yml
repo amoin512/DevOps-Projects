@@ -1,6 +1,6 @@
 name: CI/CD Pipeline
 
-on: push
+on: [push]
 
 jobs:
   build:
@@ -25,4 +25,3 @@ jobs:
           docker tag todo-list-image:v2 moina512/python-todo-list-repo:v2
           docker push
           echo "All done!"
-          
