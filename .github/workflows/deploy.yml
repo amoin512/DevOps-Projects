@@ -9,7 +9,9 @@ jobs:
       - name: Get code for runner
         uses: actions/checkout@v4
       - name: Build Image
-        run: docker build -t todo-list-image:v2 .
+        run: pwd
+        run: ls
+        #run: docker build -t todo-list-image:v2 .
   push:
     needs: build
     runs-on: ubuntu-latest
