@@ -23,6 +23,7 @@ jobs:
           password: 190Lees!1106
       - name: Tag and push the image
         run: |
+          docker image ls
           docker tag todo-list-image:v2 moina512/python-todo-list-repo:v2
-          docker push
+          docker push moina512/python-todo-list-repo:v2
           echo "All done!"
