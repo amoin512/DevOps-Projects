@@ -10,9 +10,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Build Image
         run: | 
-          pwd
+          cp /c/Users/arman/OneDrive/Documents/DevOps-Projects/Project-2_AutomateTodoList/Dockerfile /c/Users/arman/OneDrive/Documents/DevOps-Projects 
           ls
-        #run: docker build -t todo-list-image:v2 .
+          docker build -t todo-list-image:v2 . 
   push:
     needs: build
     runs-on: ubuntu-latest
