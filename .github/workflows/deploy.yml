@@ -26,4 +26,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deoloy on Docker
-        run:  docker run -it --rm moina512/python-todo-list-repo:v2
+        run:  docker run moina512/python-todo-list-repo:v2
