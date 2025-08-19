@@ -36,6 +36,7 @@ jobs:
   
   login-to-GKE:
     needs: test-on-docker
+    if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: Get GKE credentials 
@@ -45,4 +46,3 @@ jobs:
           location: ${{ env.GKE_LOCATION }}
       - name: Deploy on GKE
         run: kubectl create ${{ env.WORKLOAD_NAME }} --image=moina512/python-todo-list-repo:v2
-        
