@@ -2,6 +2,12 @@ name: CI/CD Pipeline for Project-2
 
 on: push
 
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: test-cluster-2
+  GKE_LOCATION: us-east1
+  WORKLOAD_NAME: todo-list
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -27,3 +33,16 @@ jobs:
     steps:
       - name: Deoloy on Docker
         run:  docker run moina512/python-todo-list-repo:v2
+  
+  login-to-GKE:
+    needs: test-on-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get GKE credentials 
+        uses: google-github-actions/get-gke-credentials@db150f2cc60d1716e61922b832eae71d2a45938f
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_LOCATION }}
+      - name: Deploy on GKE
+        run: kubectl create ${{ env.WORKLOAD_NAME }} --image=moina512/python-todo-list-repo:v2
+        
