@@ -32,33 +32,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deoloy on Docker
-        run:  docker run moina512/python-todo-list-repo:v3
+        run:  echo 4 | docker -i run moina512/python-todo-list-repo:v3
   
-  login-to-GKE:
-    needs: test-on-docker
-    if: failure()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code for runner
-        uses: actions/checkout@v4
-      - name: Install gcloud CLI
-        uses: google-github-actions/auth@v2
-        with:
-          project_id: ${{ env.PROJECT_ID }}
-          credentials_json: ${{ secrets.GKE_SA_KEY }}
-          #install_components: 'gke-gcloud-auth-plugin'
-          #export_default_credentials: true
+  # login-to-GKE:
+  #   needs: test-on-docker
+  #   if: failure()
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Get code for runner
+  #       uses: actions/checkout@v4
+  #     - name: Install gcloud CLI
+  #       uses: google-github-actions/auth@v2
+  #       with:
+  #         project_id: ${{ env.PROJECT_ID }}
+  #         credentials_json: ${{ secrets.GKE_SA_KEY }}
+  #         #install_components: 'gke-gcloud-auth-plugin'
+  #         #export_default_credentials: true
       
-      - name: Get GKE credentials
-        uses: google-github-actions/get-gke-credentials@v2
-        with:
-          cluster_name: ${{ env.GKE_CLUSTER }}
-          location: ${{ env.GKE_LOCATION }}
+  #     - name: Get GKE credentials
+  #       uses: google-github-actions/get-gke-credentials@v2
+  #       with:
+  #         cluster_name: ${{ env.GKE_CLUSTER }}
+  #         location: ${{ env.GKE_LOCATION }}
       
-      - id: 'get-pods'
-        run: kubectl get pods #requires Kubernetes Engine Developer role
+  #     - id: 'get-pods'
+  #       run: kubectl get pods #requires Kubernetes Engine Developer role
 
-      - name: Deploy to GKE
-        run: |
-          kubectl create -f Project-2_AutomateTodoList/resources.yml
-          kubectl get pods
+  #     - name: Deploy to GKE
+  #       run: |
+  #         kubectl create -f Project-2_AutomateTodoList/resources.yml
+  #         kubectl get pods
