@@ -56,4 +56,4 @@ jobs:
           location: ${{ env.GKE_LOCATION }}
       
       - id: 'get-pods'
-        run: kubectl get pods
+        run: kubectl get pods #requires Kubernetes Engine Developer role
