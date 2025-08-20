@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deoloy on Docker
-        run:  echo 4 | docker -i run moina512/python-todo-list-repo:v3
+        run:  echo 4 | docker run -i moina512/python-todo-list-repo:v3
   
   # login-to-GKE:
   #   needs: test-on-docker
