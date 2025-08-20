@@ -4,7 +4,7 @@ on: push
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER: test-cluster-2
+  GKE_CLUSTER: project-cluster-1
   GKE_LOCATION: us-east1
   WORKLOAD_NAME: todo-list
 
@@ -46,7 +46,7 @@ jobs:
         with:
           project_id: ${{ env.PROJECT_ID }}
           credentials_json: ${{ secrets.GKE_SA_KEY }}
-          install_components: 'gke-gcloud-auth-plugin'
+          #install_components: 'gke-gcloud-auth-plugin'
           #export_default_credentials: true
       
       - name: Get GKE credentials
@@ -57,5 +57,3 @@ jobs:
       
       - id: 'get-pods'
         run: kubectl get pods
-      
-         #gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --region ${{ env.GKE_LOCATION }}} --project ${{ env.PROJECT_ID }}
