@@ -39,15 +39,11 @@ jobs:
     if: failure()
     runs-on: ubuntu-latest
     steps:
-      - id: 'auth'
+      - name: Get code for runner
+        uses: actions/checkout@v4
+      - name: Install gcloud CLI
         uses: google-github-actions/auth@v2
         with:
+          project_id: ${{ env.PROJECT_ID }}
           credentials_json: ${{ secrets.GKE_SA_KEY }}
-          project_id: ${{ secrets.GKE_PROJECT }}
-      - name: Get GKE credentials 
-        uses: google-github-actions/get-gke-credentials@db150f2cc60d1716e61922b832eae71d2a45938f
-        with:
-          cluster_name: ${{ env.GKE_CLUSTER }}
-          location: ${{ env.GKE_LOCATION }}
-      - name: Deploy on GKE
-        run: kubectl create ${{ env.WORKLOAD_NAME }} --image=moina512/python-todo-list-repo:v2
+          #export_default_credentials: true
