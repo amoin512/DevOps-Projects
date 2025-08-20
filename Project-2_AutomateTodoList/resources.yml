@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: todo-2-c
-        image: moina512/python-todo-list-repo:v2
+        image: moina512/python-todo-list-repo:v3
         command: ["python", "code.py"]
         stdin: true #enable interactive input
         tty: true #allocate TTY for interactive sessions
