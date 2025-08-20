@@ -1,4 +1,4 @@
 FROM python:3.9-slim
-WORKDIR /app
-COPY code.py /app
+WORKDIR /home-app
+COPY code.py /home-app
 CMD [ "python", "code.py" ]
