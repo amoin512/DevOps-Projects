@@ -57,3 +57,8 @@ jobs:
       
       - id: 'get-pods'
         run: kubectl get pods #requires Kubernetes Engine Developer role
+
+      - name: Deploy to GKE
+        run: |
+          kubectl create -f Project-2_AutomateTodoList/resources.yml
+          kubectl get pods
